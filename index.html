@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muhammad Abubakar — Software Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0d1117;
+    --panel:#12161d;
+    --panel-2:#161b22;
+    --border:#2a313c;
+    --border-soft:#1e242c;
+    --text:#e6edf3;
+    --text-dim:#8b949e;
+    --text-faint:#5b6472;
+    --amber:#f0b429;
+    --teal:#39d0d8;
+    --green:#3fb950;
+    --pink:#ff7b9c;
+    --dart:#00c4b3;
+    --js:#f1e05a;
+    --html:#e6673e;
+    --css:#8a6fd6;
+    --radius:10px;
+    --maxw:920px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:'';
+    position:fixed; inset:0;
+    background-image:
+      linear-gradient(var(--border-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border-soft) 1px, transparent 1px);
+    background-size:64px 64px;
+    opacity:.35;
+    pointer-events:none;
+    z-index:0;
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, black 20%, transparent 75%);
+  }
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px; position:relative; z-index:1;}
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(13,17,23,.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border-soft);
+  }
+  nav .wrap{display:flex; align-items:center; justify-content:space-between; height:60px; max-width:1040px;}
+  .brand{font-family:'JetBrains Mono',monospace; font-weight:600; font-size:15px; letter-spacing:.02em; color:var(--text);}
+  .brand span{color:var(--amber);}
+  .navlinks{display:flex; gap:28px; font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--text-dim);}
+  .navlinks a{position:relative; padding:4px 0; transition:color .2s;}
+  .navlinks a:hover, .navlinks a:focus-visible{color:var(--teal);}
+  .navlinks a::before{content:'./'; color:var(--text-faint);}
+  .nav-cta{font-family:'JetBrains Mono',monospace; font-size:12px; border:1px solid var(--border); padding:7px 14px; border-radius:6px; color:var(--amber); transition:all .2s;}
+  .nav-cta:hover{background:var(--amber); color:#0d1117; border-color:var(--amber);}
+  @media(max-width:720px){ .navlinks{display:none;} }
+
+  /* ---------- HERO / TERMINAL ---------- */
+  header.hero{padding:88px 0 60px; position:relative; z-index:1;}
+  .hero .wrap{display:flex; flex-direction:column; align-items:center; text-align:center; gap:28px; max-width:1040px;}
+  .eyebrow{font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--teal); display:flex; align-items:center; gap:8px;}
+  .eyebrow .dot{width:7px; height:7px; border-radius:50%; background:var(--green); box-shadow:0 0 0 3px rgba(63,185,80,.18); animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+  .hero h1{font-size:clamp(34px,6vw,58px); font-weight:700; line-height:1.05; letter-spacing:-.02em;}
+  .hero h1 .accent{color:var(--amber);}
+  .hero p.sub{max-width:600px; color:var(--text-dim); font-size:16.5px;}
+
+  .terminal{
+    width:100%; max-width:640px; text-align:left;
+    background:var(--panel-2); border:1px solid var(--border); border-radius:var(--radius);
+    overflow:hidden; box-shadow:0 20px 60px -20px rgba(0,0,0,.6);
+  }
+  .term-bar{display:flex; align-items:center; gap:8px; padding:10px 14px; background:var(--panel); border-bottom:1px solid var(--border-soft);}
+  .term-bar .tdot{width:11px; height:11px; border-radius:50%;}
+  .term-bar .r{background:#ff5f56;} .term-bar .y{background:#ffbd2e;} .term-bar .g{background:#27c93f;}
+  .term-title{margin-left:auto; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-faint);}
+  .term-body{padding:20px 22px 26px; font-family:'JetBrains Mono',monospace; font-size:13.5px; color:var(--text-dim); min-height:150px;}
+  .term-body .ln{margin-bottom:8px;}
+  .term-body .prompt{color:var(--green);}
+  .term-body .path{color:var(--teal);}
+  .term-body .out{color:var(--text);}
+  .caret{display:inline-block; width:7px; height:15px; background:var(--amber); vertical-align:middle; margin-left:2px; animation:blink 1s step-end infinite;}
+  @keyframes blink{50%{opacity:0;}}
+
+  .hero-actions{display:flex; gap:12px; flex-wrap:wrap; justify-content:center;}
+  .btn{font-family:'JetBrains Mono',monospace; font-size:13px; padding:11px 20px; border-radius:7px; border:1px solid var(--border); transition:all .2s; display:inline-flex; align-items:center; gap:8px;}
+  .btn-solid{background:var(--amber); color:#0d1117; border-color:var(--amber); font-weight:600;}
+  .btn-solid:hover{background:#ffc94a;}
+  .btn-outline:hover{border-color:var(--teal); color:var(--teal);}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:84px 0; border-top:1px solid var(--border-soft); position:relative; z-index:1;}
+  .sec-head{display:flex; align-items:baseline; gap:14px; margin-bottom:40px;}
+  .sec-num{font-family:'JetBrains Mono',monospace; color:var(--text-faint); font-size:14px;}
+  .sec-head h2{font-size:28px; font-weight:600; letter-spacing:-.01em;}
+  .sec-file{margin-left:auto; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-faint); border:1px solid var(--border-soft); padding:4px 10px; border-radius:5px;}
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:44px; align-items:start;}
+  .about-grid p{color:var(--text-dim); font-size:15.5px; margin-bottom:14px;}
+  .about-grid p strong{color:var(--text); font-weight:600;}
+  .kv{background:var(--panel); border:1px solid var(--border-soft); border-radius:var(--radius); padding:20px 22px;}
+  .kv-row{display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid var(--border-soft); font-family:'JetBrains Mono',monospace; font-size:12.5px;}
+  .kv-row:last-child{border-bottom:none;}
+  .kv-row .k{color:var(--text-faint);}
+  .kv-row .v{color:var(--teal); text-align:right;}
+  @media(max-width:760px){ .about-grid{grid-template-columns:1fr;} }
+
+  /* ---------- EXPERIENCE / GIT LOG ---------- */
+  .log{border-left:2px solid var(--border-soft); margin-left:6px;}
+  .commit{position:relative; padding:2px 0 30px 30px;}
+  .commit::before{content:''; position:absolute; left:-7px; top:4px; width:12px; height:12px; border-radius:50%; background:var(--bg); border:2px solid var(--green);}
+  .commit:last-child{padding-bottom:2px;}
+  .commit-head{font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--text-faint); margin-bottom:6px; display:flex; flex-wrap:wrap; gap:10px; align-items:center;}
+  .commit-hash{color:var(--amber);}
+  .commit-head .branch{background:var(--panel-2); border:1px solid var(--border-soft); padding:2px 8px; border-radius:4px; color:var(--teal);}
+  .commit h3{font-size:18px; margin-bottom:4px;}
+  .commit .role-org{font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--text-dim); margin-bottom:12px;}
+  .commit .role-org span{color:var(--text-faint);}
+  .commit ul{list-style:none; color:var(--text-dim); font-size:14.5px;}
+  .commit li{position:relative; padding-left:20px; margin-bottom:7px;}
+  .commit li::before{content:'+'; position:absolute; left:0; color:var(--green); font-family:'JetBrains Mono',monospace;}
+
+  /* ---------- PROJECTS ---------- */
+  .proj-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  .card{background:var(--panel); border:1px solid var(--border-soft); border-radius:var(--radius); overflow:hidden; transition:border-color .2s, transform .2s;}
+  .card:hover{border-color:var(--border); transform:translateY(-2px);}
+  .card-tab{display:flex; align-items:center; gap:8px; padding:10px 16px; background:var(--panel-2); border-bottom:1px solid var(--border-soft); font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-faint);}
+  .lang-dot{width:9px; height:9px; border-radius:50%; flex-shrink:0;}
+  .card-body{padding:18px 18px 20px;}
+  .card h3{font-size:17px; margin-bottom:8px;}
+  .card p{color:var(--text-dim); font-size:14px; margin-bottom:14px;}
+  .tags{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px;}
+  .tag{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-dim); background:var(--panel-2); border:1px solid var(--border-soft); padding:3px 9px; border-radius:20px;}
+  .card-links{display:flex; gap:14px; font-family:'JetBrains Mono',monospace; font-size:12.5px;}
+  .card-links a{color:var(--teal); display:flex; align-items:center; gap:5px;}
+  .card-links a:hover{color:var(--amber);}
+  .proj-full{grid-column:1 / -1;}
+  .mini-head{font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--text-faint); margin:36px 0 16px; display:flex; align-items:center; gap:10px;}
+  .mini-head::after{content:''; flex:1; height:1px; background:var(--border-soft);}
+  .mini-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+  @media(max-width:820px){ .proj-grid, .mini-grid{grid-template-columns:1fr;} }
+
+  /* ---------- SKILLS / TREE ---------- */
+  .tree{background:var(--panel); border:1px solid var(--border-soft); border-radius:var(--radius); padding:26px 28px; font-family:'JetBrains Mono',monospace; font-size:13.5px; overflow-x:auto;}
+  .tree .dir{color:var(--amber); margin:14px 0 8px;}
+  .tree .dir:first-child{margin-top:0;}
+  .tree .leaf{color:var(--text-dim); padding-left:24px; position:relative; margin-bottom:6px; display:block;}
+  .tree .leaf .branchchar{color:var(--text-faint); margin-right:6px;}
+  .tree .leaf b{color:var(--text); font-weight:500;}
+
+  /* ---------- EDUCATION ---------- */
+  .edu-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  .edu-card{background:var(--panel); border:1px solid var(--border-soft); border-radius:var(--radius); padding:22px 24px;}
+  .edu-card .yr{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--teal); margin-bottom:8px;}
+  .edu-card h3{font-size:16.5px; margin-bottom:4px;}
+  .edu-card .org{color:var(--text-dim); font-size:13.5px;}
+  @media(max-width:720px){ .edu-grid{grid-template-columns:1fr;} }
+
+  /* ---------- CONTACT / FOOTER ---------- */
+  footer{padding:90px 0 60px; text-align:center;}
+  footer h2{font-size:30px; margin-bottom:14px;}
+  footer p{color:var(--text-dim); max-width:480px; margin:0 auto 32px;}
+  .contact-term{max-width:520px; margin:0 auto 34px; text-align:left;}
+  .social-row{display:flex; justify-content:center; gap:16px; margin-top:34px; font-family:'JetBrains Mono',monospace; font-size:13px;}
+  .social-row a{border:1px solid var(--border); padding:9px 18px; border-radius:7px; color:var(--text-dim); transition:all .2s;}
+  .social-row a:hover{color:var(--teal); border-color:var(--teal);}
+  .foot-note{margin-top:50px; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--text-faint);}
+
+  ::selection{background:var(--amber); color:#0d1117;}
+  :focus-visible{outline:2px solid var(--teal); outline-offset:3px;}
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">muhammad<span>.</span>abubakar</div>
+    <div class="navlinks">
+      <a href="#about">about</a>
+      <a href="#experience">experience</a>
+      <a href="#projects">projects</a>
+      <a href="#skills">skills</a>
+      <a href="#education">education</a>
+    </div>
+    <a class="nav-cta" href="mailto:muhammadabubakar9412@gmail.com">contact_me()</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot"></span>AVAILABLE FOR OPPORTUNITIES · KARACHI, PK</div>
+    <h1>Building cross-platform apps<br>&amp; <span class="accent">shipping</span> full-stack products.</h1>
+    <p class="sub">Final-year IT student and software developer specializing in Flutter, React Native and MERN — turning ideas into production-ready mobile and web systems.</p>
+
+    <div class="terminal">
+      <div class="term-bar">
+        <span class="tdot r"></span><span class="tdot y"></span><span class="tdot g"></span>
+        <span class="term-title">whoami — zsh</span>
+      </div>
+      <div class="term-body">
+        <div class="ln"><span class="prompt">abubakar@dev</span>:<span class="path">~</span>$ whoami</div>
+        <div class="ln out">Muhammad Abubakar — Software Developer</div>
+        <div class="ln"><span class="prompt">abubakar@dev</span>:<span class="path">~</span>$ cat stack.txt</div>
+        <div class="ln out">Flutter · React Native · React · Firebase · MongoDB · SQL</div>
+        <div class="ln"><span class="prompt">abubakar@dev</span>:<span class="path">~</span>$ <span class="caret"></span></div>
+      </div>
+    </div>
+
+    <div class="hero-actions">
+      <a class="btn btn-solid" href="#projects">View Projects</a>
+      <a class="btn btn-outline" href="https://github.com/muhammadabubakar9412" target="_blank" rel="noopener">GitHub ↗</a>
+      <a class="btn btn-outline" href="https://www.linkedin.com/in/muhammadd-abubakar" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><h2>About</h2><span class="sec-file">about.md</span></div>
+    <div class="about-grid">
+      <div>
+        <p>I'm a <strong>final-year BS Information Technology student</strong> at Bahria University, Karachi, graduating in 2026, with hands-on experience building <strong>cross-platform mobile apps and enterprise-grade web systems</strong> across healthcare, fintech, and logistics domains.</p>
+        <p>My work spans <strong>Flutter and React Native</strong> for mobile delivery, <strong>React</strong> for web interfaces, and <strong>Firebase, MongoDB, MySQL and SQLite</strong> on the backend. I care about shipping complete, functional solutions — not just prototypes — and enjoy collaborating closely with teams to get there.</p>
+        <p>Recently, I completed an internship at <strong>Karachi Shipyard &amp; Engineering Works</strong>, where I built a full Visitor Management System now used to digitize a manual, paper-based process.</p>
+      </div>
+      <div class="kv">
+        <div class="kv-row"><span class="k">location</span><span class="v">Karachi, Pakistan</span></div>
+        <div class="kv-row"><span class="k">education</span><span class="v">BS IT, Bahria University</span></div>
+        <div class="kv-row"><span class="k">graduating</span><span class="v">2026</span></div>
+        <div class="kv-row"><span class="k">focus</span><span class="v">Mobile · Full-Stack Web</span></div>
+        <div class="kv-row"><span class="k">domains</span><span class="v">Healthcare, Fintech, Logistics</span></div>
+        <div class="kv-row"><span class="k">status</span><span class="v">Open to roles</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Experience</h2><span class="sec-file">git log --oneline</span></div>
+    <div class="log">
+      <div class="commit">
+        <div class="commit-head"><span class="commit-hash">#a1c9f3e</span><span class="branch">main</span><span>Jul 2025 – Sep 2025</span></div>
+        <h3>Software Development Intern</h3>
+        <div class="role-org">Karachi Shipyard &amp; Engineering Works (KSEW) <span>· On-site</span></div>
+        <ul>
+          <li>Designed and delivered a full Visitor Management System (VMS), a digitized entry application that replaced a manual, paper-based process — reducing check-in time and improving facility security.</li>
+          <li>Built a cross-platform interface (web + mobile) so security staff could operate the system on any device without maintaining separate codebases.</li>
+          <li>Integrated a backend database for real-time visitor logging, enabling instant lookup and audit-trail generation for management.</li>
+        </ul>
+      </div>
+      <div class="commit">
+        <div class="commit-head"><span class="commit-hash">#0e4b21d</span><span class="branch">education</span><span>Sep 2022 – Jun 2026</span></div>
+        <h3>BS Information Technology</h3>
+        <div class="role-org">Bahria University, Karachi Campus</div>
+        <ul>
+          <li>Coursework and projects spanning mobile development, full-stack web engineering, databases, and systems/network fundamentals.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Projects</h2><span class="sec-file">~/repositories</span></div>
+
+    <div class="proj-grid">
+      <div class="card">
+        <div class="card-tab"><span class="lang-dot" style="background:var(--dart)"></span>BusHub-app · Dart</div>
+        <div class="card-body">
+          <h3>BusHub</h3>
+          <p>Public transit navigation app helping urban commuters track bus routes, live departures and stop-by-stop navigation without needing to know the full system.</p>
+          <div class="tags"><span class="tag">Flutter</span><span class="tag">Firebase</span><span class="tag">Dart</span><span class="tag">Google Maps API</span></div>
+          <div class="card-links"><a href="https://github.com/muhammadabubakar9412/BusHub-app" target="_blank" rel="noopener">Repository ↗</a></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-tab"><span class="lang-dot" style="background:var(--js)"></span>adhd-code-native · JavaScript</div>
+        <div class="card-body">
+          <h3>ADHD Code Native</h3>
+          <p>Educational therapy app replacing passive study with interactive, game-based modules across 5 independent cognitive-skill areas: memory, sequencing, pattern recognition and task completion.</p>
+          <div class="tags"><span class="tag">React Native</span><span class="tag">Expo</span><span class="tag">JavaScript</span></div>
+          <div class="card-links"><a href="https://github.com/muhammadabubakar9412" target="_blank" rel="noopener">GitHub Profile ↗</a></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-tab"><span class="lang-dot" style="background:var(--js)"></span>wealthy-way-trade · JavaScript</div>
+        <div class="card-body">
+          <h3>Wealthy Way Trade</h3>
+          <p>Broker-style crypto and stock trading dashboard with live financial data, responsive layout, and consistent rendering across Chrome, Firefox, Safari and Edge.</p>
+          <div class="tags"><span class="tag">React</span><span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">JavaScript</span></div>
+          <div class="card-links"><a href="https://github.com/muhammadabubakar9412" target="_blank" rel="noopener">GitHub Profile ↗</a></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-tab"><span class="lang-dot" style="background:var(--dart)"></span>Asaan_ghar · Dart</div>
+        <div class="card-body">
+          <h3>Asaan Ghar</h3>
+          <p>Flutter-based home services application built with Firebase for authentication and real-time data, focused on a simple, accessible booking experience.</p>
+          <div class="tags"><span class="tag">Flutter</span><span class="tag">Dart</span><span class="tag">Firebase</span></div>
+          <div class="card-links"><a href="https://github.com/muhammadabubakar9412/Asaan_ghar" target="_blank" rel="noopener">Repository ↗</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mini-head">EARLY PRACTICE PROJECTS</div>
+    <div class="mini-grid">
+      <div class="card">
+        <div class="card-tab"><span class="lang-dot" style="background:var(--css)"></span>image-gallery · CSS</div>
+        <div class="card-body">
+          <h3>Image Gallery</h3>
+          <p>Interactive image gallery with JavaScript-driven navigation controls.</p>
+          <div class="card-links"><a href="https://github.com/muhammadabubakar9412/codealpha_task1.Image-Gallery" target="_blank" rel="noopener">Repository ↗</a></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-tab"><span class="lang-dot" style="background:var(--html)"></span>calculator · HTML</div>
+        <div class="card-body">
+          <h3>Calculator</h3>
+          <p>Basic arithmetic calculator built with HTML, CSS and JavaScript.</p>
+          <div class="card-links"><a href="https://github.com/muhammadabubakar9412/code-alpha-task-2" target="_blank" rel="noopener">Repository ↗</a></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-tab"><span class="lang-dot" style="background:var(--js)"></span>music-player · JavaScript</div>
+        <div class="card-body">
+          <h3>Music Player</h3>
+          <p>Audio player with playback controls and track information display.</p>
+          <div class="card-links"><a href="https://github.com/muhammadabubakar9412/code-alpha-task-3" target="_blank" rel="noopener">Repository ↗</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Skills</h2><span class="sec-file">stack.tree</span></div>
+    <div class="tree">
+      <div class="dir">web/</div>
+      <span class="leaf"><span class="branchchar">├──</span><b>HTML5</b> · CSS3 · JavaScript</span>
+      <span class="leaf"><span class="branchchar">└──</span><b>React</b></span>
+
+      <div class="dir">app-dev/</div>
+      <span class="leaf"><span class="branchchar">├──</span><b>Flutter</b> · Dart</span>
+      <span class="leaf"><span class="branchchar">├──</span><b>React Native</b> · Expo</span>
+      <span class="leaf"><span class="branchchar">└──</span>Java (Android)</span>
+
+      <div class="dir">backend-and-db/</div>
+      <span class="leaf"><span class="branchchar">├──</span><b>Firebase</b> (Auth, Realtime DB, Firestore)</span>
+      <span class="leaf"><span class="branchchar">├──</span>MongoDB</span>
+      <span class="leaf"><span class="branchchar">└──</span>MySQL · SQLite</span>
+
+      <div class="dir">tools/</div>
+      <span class="leaf"><span class="branchchar">├──</span>Git / GitHub</span>
+      <span class="leaf"><span class="branchchar">├──</span>VS Code · Android Studio</span>
+      <span class="leaf"><span class="branchchar">└──</span>Figma · MS Office</span>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Education</h2><span class="sec-file">education.json</span></div>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="yr">SEP 2022 — JUN 2026</div>
+        <h3>BS Information Technology</h3>
+        <div class="org">Bahria University, Karachi Campus</div>
+      </div>
+      <div class="edu-card">
+        <div class="yr">AUG 2020 — JUN 2022</div>
+        <h3>Pre-Engineering</h3>
+        <div class="org">Army Public College (APS&amp;C), COD</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <h2>Let's build something.</h2>
+    <p>Open to full-time developer and IT project roles, along with freelance opportunities. Reach out below.</p>
+
+    <div class="terminal contact-term">
+      <div class="term-bar">
+        <span class="tdot r"></span><span class="tdot y"></span><span class="tdot g"></span>
+        <span class="term-title">contact.sh</span>
+      </div>
+      <div class="term-body">
+        <div class="ln"><span class="prompt">abubakar@dev</span>:<span class="path">~</span>$ cat contact.sh</div>
+        <div class="ln out">email : muhammadabubakar9412@gmail.com</div>
+        <div class="ln out">phone : +92 308 2344064</div>
+        <div class="ln out">github: github.com/muhammadabubakar9412</div>
+        <div class="ln"><span class="prompt">abubakar@dev</span>:<span class="path">~</span>$ <span class="caret"></span></div>
+      </div>
+    </div>
+
+    <div class="social-row">
+      <a href="mailto:muhammadabubakar9412@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/muhammadd-abubakar" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/muhammadabubakar9412" target="_blank" rel="noopener">GitHub</a>
+      <a href="tel:+923082344064">Call</a>
+    </div>
+
+    <div class="foot-note">© 2026 Muhammad Abubakar · Built with HTML, CSS &amp; JS</div>
+  </div>
+</footer>
+
+</body>
+</html>
